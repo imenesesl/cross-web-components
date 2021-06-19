@@ -1,0 +1,78 @@
+{
+  "root": true,
+  "extends": [
+    "eslint:recommended",
+    "plugin:prettier/recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier/@typescript-eslint"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "env": {
+    "browser": true,
+    "es6": true,
+    "jest": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true,
+      "arrowFunctions": true
+    }
+  },
+  "plugins": ["@typescript-eslint", "prettier", "simple-import-sort"],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".ts"],
+        "paths": ["./src"]
+      }
+    }
+  },
+  "rules": {
+    "comma-dangle": "off",
+    "function-paren-newline": "off",
+    "global-require": "off",
+    "import/no-dynamic-require": "off",
+    "no-inner-declarations": "off",
+    "class-methods-use-this": "off",
+    "import/extensions": "off",
+    "import/prefer-default-export": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-var-requires": "off",
+    "no-var": "error",
+    "camelcase": "error",
+    "array-callback-return": "error",
+    "default-case": "error",
+    "eqeqeq": "error",
+    "max-lines": ["error", { "max": 120 }],
+    "no-await-in-loop": "error",
+    "no-console": "error",
+    "no-duplicate-imports": "error",
+    "no-empty-function": "error",
+    "no-eq-null": "error",
+    "sort-imports": "off",
+    "import/order": "off",
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
+    "eslint-disable-next-line": "off",
+    "no-unused-vars": [
+      2,
+      {
+        "args": "none"
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": "src/**/*.js",
+      "rules": {
+        "simple-import-sort/imports": "off",
+        "import/order": ["error", { "newlines-between": "always" }]
+      }
+    }
+  ]
+}
