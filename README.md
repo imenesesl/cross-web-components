@@ -74,7 +74,7 @@ export const Modal = () => {
 - Add the following in the dependencies of your package.json
 
 ```bash
-npm install cross-web-components'
+npm install rxjs cross-web-components'
 ```
 
 - Ready to use
