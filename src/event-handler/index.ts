@@ -2,14 +2,13 @@
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 
-import { EVENT_HANDLER_CHILD, EVENT_HANDLER_ROOT } from '../constants';
 import { isNullOrUndefined } from '../utils/checkers';
 import { atDocument, atWindow } from '../utils/dom';
-import { ConfigEventHandler, EventHandlerInterface, Payload } from './interface';
+import { ConfigEventHandler, EventHandlerInstance, EventHandlerInterface, Payload } from './interface';
 
 class EventHandlerAdapter implements EventHandlerInterface {
   private store: BehaviorSubject<any> = new BehaviorSubject(null);
-  public conf: ConfigEventHandler = { listen: '', destination: '' };
+  public conf: ConfigEventHandler = { root: '', child: '' };
 
   constructor(location: ConfigEventHandler) {
     this.conf = location;
@@ -24,25 +23,21 @@ class EventHandlerAdapter implements EventHandlerInterface {
   }
 
   private main(): void {
-    atDocument().addEventListener(this.conf.listen, (e: Event) => this.store.next(e));
+    atDocument().addEventListener(this.conf.root, (e: Event) => this.store.next(e));
   }
 
   public dispatch<T>(action: string, payload: T): void {
-    const data: Payload<T> = { currentPayload: { ...payload }, action };
+    const data: Payload<T> = { payload, action };
     const { CustomEvent } = atWindow();
-    const event = new CustomEvent(this.conf.destination, { detail: data });
+    const event = new CustomEvent(this.conf.child, { detail: data });
     atDocument().dispatchEvent(event);
   }
 
-  public listener<T>(currentAction: string, fun: (payload: T) => void): Subscription {
-    return this.state().subscribe(({ action, currentPayload }) =>
-      !currentAction || currentAction === action ? fun({ ...currentPayload }) : null,
-    );
+  public listener<T>(action: string, fun: (payload: T) => void): Subscription {
+    return this.state().subscribe(event => (event.action === action ? fun({ ...event.payload }) : null));
   }
 }
 
-export const EventHandler = {
-  root: () => new EventHandlerAdapter({ listen: EVENT_HANDLER_ROOT, destination: EVENT_HANDLER_CHILD }),
-  child: () => new EventHandlerAdapter({ listen: EVENT_HANDLER_CHILD, destination: EVENT_HANDLER_ROOT }),
-  custom: (action: string) => new EventHandlerAdapter({ listen: action, destination: action }),
+export const EventHandler: EventHandlerInstance<EventHandlerAdapter> = {
+  channel: (action: string) => new EventHandlerAdapter({ root: action, child: action }),
 };

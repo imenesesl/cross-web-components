@@ -1,6 +1,6 @@
 {
   "name": "cross-web-components",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "cross-web-components",
   "source": "src/index.ts",
   "main": "dist/index.js",
@@ -11,10 +11,10 @@
   "scripts": {
     "start": "microbundle watch",
     "demo": "parcel serve ./demo/index.html",
-    "build": "microbundle",
+    "build": "rm -rf dist && microbundle --compress",
     "test": "jest --config=jest.json",
-    "lint": "eslint . --ext .ts --quiet",
-    "lint:fix": "eslint . --ext .ts,.tsx --fix",
+    "lint": "eslint ./src --ext .ts --quiet",
+    "lint:fix": "eslint ./src --ext .ts,.tsx --fix",
     "prettier:write": "prettier --write *"
   },
   "repository": {
@@ -22,25 +22,26 @@
     "url": "git+https://github.com/imenesesl/cross-web-components.git"
   },
   "keywords": [
-  "nextjs", 
-  "react", 
-  "rxjs", 
-  "microfrontend", 
-  "micro-frontend", 
-  "micro frontend", 
-  "microfrontend platform",
-  "messaging",
-  "communication",
-  "cross-origin",
-  "embedding",
-  "iframe",
-  "web component",
-  "webcomponent",
-  "web-component",
-  "javascript",
-  "typescript"
+    "nextjs",
+    "react",
+    "rxjs",
+    "vue",
+    "microfrontend",
+    "micro-frontend",
+    "micro frontend",
+    "microfrontend platform",
+    "messaging",
+    "communication",
+    "cross-origin",
+    "embedding",
+    "iframe",
+    "web component",
+    "webcomponent",
+    "web-component",
+    "javascript",
+    "typescript"
   ],
-  "author": "",
+  "author": "Luis Meneses",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/imenesesl/cross-web-components/issues"
@@ -71,16 +72,14 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "npm run test && lint-staged"
     }
   },
   "lint-staged": {
     "./src/**/*.{js,ts,json,md,yml}": [
-      "npm run test",
       "npm run prettier:write",
       "npm run lint:fix",
       "git add"
     ]
-  },
-  "dependencies": {}
+  }
 }

@@ -5,12 +5,15 @@ export interface EventHandlerInterface {
   listener<T>(action: string, fun: (payload: T) => void): Subscription;
 }
 
+export interface EventHandlerInstance<T> {
+  channel: (channel: string) => T;
+}
 export interface Payload<T> {
-  currentPayload: T;
+  payload: T;
   action: string;
 }
 
 export interface ConfigEventHandler {
-  listen: string;
-  destination: string;
+  root: string;
+  child: string;
 }

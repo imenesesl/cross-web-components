@@ -4,7 +4,7 @@ import { EventHandler } from '../src';
 import { ModalState } from './model';
 
 export const Left: React.FC = () => {
-  const customEvent = EventHandler.custom('[MODAL]');
+  const customEvent = EventHandler.channel('[MODAL]');
 
   const [id, setId] = useState<string>('');
 

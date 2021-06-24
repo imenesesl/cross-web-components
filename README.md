@@ -1,30 +1,19 @@
 # cross-web-components
 
-#### `Super lightweight package to establish communication between your web components`
+## `Package to establish communication between your web components`
 
 - ## EventHandler
 
 ```ts
 import { EventHandler } from 'cross-web-components';
 
-const rootEvent = EventHandler.root();
-const childEvent = EventHandler.child();
-const customEvent = EventHandler.custom('[CUSTOM_KEY]');
+const customEvent = EventHandler.channel('[CUSTOM_CHANNEL]');
 ```
-
-Create a channel to establish communication between your components like
-
-`root: Root - Child`
-
-`child: Child - Root`
-
-`custom: Inside the custom single-channel`
-
-#### Example - Dispatch
+### Example - Dispatch (React)
 
 ```tsx
 export const Example = () => {
-  const customEvent = EventHandler.custom('[MODAL]');
+  const customEvent = EventHandler.channel('[MODAL]');
 
   const [id, setId] = useState<string>('');
 
@@ -39,11 +28,11 @@ export const Example = () => {
 };
 ```
 
-#### Example - Listener
+### Example - Listener (React)
 
 ```tsx
 export const Modal = () => {
-  const customEvent = EventHandler.custom('[MODAL]');
+  const customEvent = EventHandler.channel('[MODAL]');
 
   const [state, setState] = useState<ModalState>({ state: false, id: '' });
 
